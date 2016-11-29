@@ -61,7 +61,7 @@ class mediawave_connect_twitter{
 		$ret['connection'] = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $access_token,$access_token_secret);
 		$limit = $this->object_to_array($ret['connection']->get($loc));
 		$ret['remaining'] = (isset($limit['resources']['search']['/search/tweets']['remaining']) == 1) ? $limit['resources']['search']['/search/tweets']['remaining'] : 0;
-		echo "Sisa Token: ".$ret['remaining']."\r\n";
+		//echo "Sisa Token: ".$ret['remaining']."\r\n";
 
 		return $ret;
 	}	

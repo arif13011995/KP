@@ -78,77 +78,81 @@
 		<section class="breadcrumbs_block clearfix parallax">
 			<div class="container center">
 				<h2><b>Media</b>Wave</h2>
-				<p>Here is your data...</p>
+				<p>Your data...</p>
 			</div>
 		</section><!-- //BREADCRUMBS -->
 		
 		
 		<!-- BLOG -->
 		<section id="blog">
+		<?php
+		error_reporting(0);
+		$screen_name = $_POST['screen_name'];
+
+
+		set_time_limit(0);
+
+		//include the twitteroauth library
+		//require_once('C:/xampp/htdocs/localphp/connection.php');
+		require_once('twitteroauth.php');
+
+		require_once('token_twitter.php');
+
+		try {
+		 $db = new PDO('mysql:host=localhost;ports=3360;dbname=datatwitter', 'root','') or die("cant connect");
+		 $db->exec("SET CHARACTER SET utf8"); 
+
+		$cursor = -1;
+
+
+		while($cursor != 0){
+			if($cursor != 0)
+				$loc = 'friends/list.json?cursor='.$cursor.'&screen_name='.$screen_name.'&count=200';
+			else
+				break;
+
+			$data = (array)$connection->get($loc);
+			   // print_r($data);
+			   echo "\r\n";
+			// echo "count: ".sizeof($data['users'])."\n ";
+		 
+			foreach($data['users'] as  $bebas){
+
+			 $sql = "INSERT IGNORE INTO get_list_following VALUES
+					(
+					 '".$screen_name."'
+					, '".$bebas->created_at."'
+					, '".$bebas->id_str."'
+					, '".$bebas->screen_name."'
+					, '".$bebas->name."'
+					, '".$bebas->followers_count."'
+					, '".$bebas->friends_count."'
+					, '".$bebas->statuses_count."'
+					, '".$bebas->location."'
+					, '".$bebas->description."'
+					,now()
+					, ".$data['next_cursor_str']."
+					)";
+				
+					$masuk = $db->exec($sql);
+					
+				 }
 			
-<?php
-
-$screen_name = $_POST['screen_name'];
-
-set_time_limit(0);
-require_once('twitteroauth.php');
-
-require_once('token_twitter.php');
-
-
-try {
- $db = new PDO('mysql:host=localhost;ports=3360;dbname=datatwitter', 'root','') or die("cant connect");
- $db->exec("SET CHARACTER SET utf8"); 
-$cursor = -1;
-while($cursor != 0){
-	if($cursor != 0)
-		$loc = 'friends/list.json?cursor='.$cursor.'&screen_name='.$screen_name.'&count=200';
-	else{}
-		break;
-	}
-
-	$data = (array)$connection->get($loc);
-	  // print_r($data);
-	   echo "\r\n";
-	// echo "count: ".sizeof($data['users'])."\n ";
- 
-	foreach($data['users'] as  $bebas){
-
-	 $sql = "INSERT IGNORE INTO get_list_following VALUES
-			(
-			 '".$screen_name."'
-			, '".$bebas->created_at."'
-			, '".$bebas->id_str."'
-			, '".$bebas->screen_name."'
-			, '".$bebas->name."'
-			, '".$bebas->followers_count."'
-			, '".$bebas->friends_count."'
-			, '".$bebas->statuses_count."'
-			, '".$bebas->location."'
-			, '".$bebas->description."'
-			,now()
-			, ".$data['next_cursor_str']."
-			)";
-		
-			$masuk = $db->exec($sql);
 			
-		 }
-	
-	
-	$cursor = $data['next_cursor_str'];
-	echo $cursor;
-	echo "\r\n";
-	}
+			$cursor = $data['next_cursor_str'];
+			//echo"Last Cursor :".$cursor;
+			echo "\r\n";
+			}
+		}
+		catch(PDOException $e) {
+		  echo $e->getMessage();
+		}
 
-catch(PDOException $e) {
-  echo $e->getMessage();
-}
+		?>			
 
-?>
-
-<div class="container">	
-		  <h2><b>List </b>Following</h2>   
-		    <a href="download-following.php?screen_name='<?php echo $screen_name;?>'" target="_blank"><button type="button" class="btn btn-default">Download This Data</button></a>
+		<div class="container">	
+		  <h2><b>List </b>Followers</h2>   
+		    <a href="download_following.php?screen_name='<?php echo $screen_name;?>'" target="_blank"><button type="button" class="btn btn-default">Download This Data</button></a>
 
 		  <table class="table table-striped">
 		    <thead>
@@ -164,7 +168,7 @@ catch(PDOException $e) {
 		        <th>Status Count</th>
 		        <th>Location</th>
 		        <th>Description</th>
-		       
+		        
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -188,25 +192,36 @@ catch(PDOException $e) {
 			       	
 			        </tr>
 			        <?php
-			        
+			        if($i==10){
+			        	goto c;
+			        }
 			        $i++;
+			        
+			        
 			      }
 			      ?>
+			       <?php c: ?>
             </tbody>
 		  </table>
 		 </div>
-
-			
-			
-		</section><!-- //BLOG -->
+		
+		
+	</section><!-- //BLOG -->
 	</div><!-- //PAGE -->
-
-	
-
 	<!-- CONTACTS -->
+
 	<section id="contacts">
 	</section><!-- //CONTACTS -->
-	
+	 
+		<div class="container">
+		<h3>Untuk melihat lebih lanjut data di atas silahkan klik tombol <a href="download_following.php?screen_name='<?php echo $screen_name;?>'" target="_blank"><b>Download</b></a> untuk melihat data tersebut</h3>
+		</div>
+		
+		<br>
+		<br>
+		<br>
+		<br>
+
 	<!-- FOOTER -->
 	<footer>
 			

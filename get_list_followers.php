@@ -78,7 +78,7 @@
 		<section class="breadcrumbs_block clearfix parallax">
 			<div class="container center">
 				<h2><b>Media</b>Wave</h2>
-				<p>Here is your data...</p>
+				<p>Your data...</p>
 			</div>
 		</section><!-- //BREADCRUMBS -->
 		
@@ -86,7 +86,7 @@
 		<!-- BLOG -->
 		<section id="blog">
 		<?php
-
+		error_reporting(0);
 		$screen_name = $_POST['screen_name'];
 
 
@@ -140,7 +140,7 @@
 			
 			
 			$cursor = $data['next_cursor_str'];
-			echo"Last Cursor :".$cursor;
+			//echo"Last Cursor :".$cursor;
 			echo "\r\n";
 			}
 		}
@@ -152,7 +152,7 @@
 
 		<div class="container">	
 		  <h2><b>List </b>Followers</h2>   
-		    <a href="download-followers.php?screen_name='<?php echo $screen_name;?>'" target="_blank"><button type="button" class="btn btn-default">Download This Data</button></a>
+		    <a href="download_followers.php?screen_name='<?php echo $screen_name;?>'" target="_blank"><button type="button" class="btn btn-default">Download This Data</button></a>
 
 		  <table class="table table-striped">
 		    <thead>
@@ -192,20 +192,36 @@
 			       	
 			        </tr>
 			        <?php
-			        
+			        if($i==10){
+			        	goto c;
+			        }
 			        $i++;
+			        
+			        
 			      }
 			      ?>
+			       <?php c: ?>
             </tbody>
 		  </table>
 		 </div>
-
+		
+		
 	</section><!-- //BLOG -->
 	</div><!-- //PAGE -->
 	<!-- CONTACTS -->
+
 	<section id="contacts">
 	</section><!-- //CONTACTS -->
-	
+	 
+		<div class="container">
+		<h3>Untuk melihat lebih lanjut data di atas silahkan klik tombol <a href="download_followers.php?screen_name='<?php echo $screen_name;?>'" target="_blank"><b>Download</b></a> untuk melihat data tersebut</h3>
+		</div>
+		
+		<br>
+		<br>
+		<br>
+		<br>
+
 	<!-- FOOTER -->
 	<footer>
 			
