@@ -72,8 +72,8 @@ if(!isset($_SESSION['api'])){
 			});
 		});
 		
-	</script>
-	
+			</script>
+			
 </head>
 <body>
 
@@ -139,7 +139,7 @@ if(!isset($_SESSION['api'])){
 			</div><!-- //TOP SLIDER -->
 		</section><!-- //HOME -->
 		
-
+		
 		<!-- ABOUT -->
 		<section id="getdata">
 			
@@ -186,25 +186,16 @@ if(!isset($_SESSION['api'])){
 			</div><!-- //CLEAN CODE -->
 		</section><!-- //ABOUT -->
 		
-	
-	<!-- CONTACTS -->
-	<section id="contacts">
-	</section><!-- //CONTACTS -->
-	
+
 	<!-- FOOTER -->
 	<footer>
 			
 		<!-- CONTAINER -->
-		<div class="container">
-			
-			
-			<div class="row copyright">
-				<div class="col-lg-12 text-center">
-				
-				 <p>Crafted with <i class="fa fa-heart"></i>, <a href="http://designscrazed.org/" >Designscrazed</a></p>
-				</div>
-			
-			</div><!-- //ROW -->
+		<div class="container-fluid" style="align-content: center;">
+		
+			arif13011995@gmail.com
+		
+		
 		</div><!-- //CONTAINER -->
 	</footer><!-- //FOOTER -->
 	
